@@ -59,7 +59,7 @@ class _SignUpFormState extends State<SignUpForm> {
               _dateController.text = date.toString().substring(0, 10);
             },
           ),
-          PasswordField(),
+          const PasswordField(),
           ElevatedButton(
             onPressed: () {
               if (_formKey.currentState!.validate()) {

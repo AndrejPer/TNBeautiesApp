@@ -28,8 +28,7 @@ class _PasswordFieldState extends State<PasswordField> {
       validator: (value) {
         RegExp regExp = RegExp(
             r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$');
-        print('for $value it is ${regExp.hasMatch(value!)}');
-        if (value.isEmpty) {
+        if (value == null || value.isEmpty) {
           return 'Please enter password';
         } else if (!regExp.hasMatch(value)) {
           return 'Enter a valid password (Capital letter, number, symbole)';

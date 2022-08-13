@@ -6,44 +6,42 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text('Welcome'),
-            bottom: const TabBar(
-              tabs: [
-                Tab(
-                  text: 'Log in',
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Welcome'),
+          bottom: const TabBar(
+            tabs: [
+              Tab(
+                text: 'Log in',
+              ),
+              Tab(
+                text: 'Sign up',
+              ),
+            ],
+          ),
+        ),
+        body: TabBarView(children: [
+          Form(
+            key: null,
+            child: Column(
+              children: <Widget>[
+                TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: 'Enter username',
+                  ),
                 ),
-                Tab(
-                  text: 'Sign up',
-                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: 'Enter password',
+                  ),
+                )
               ],
             ),
           ),
-          body: TabBarView(children: [
-            Form(
-              key: null,
-              child: Column(
-                children: <Widget>[
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: 'Enter username',
-                    ),
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: 'Enter password',
-                    ),
-                  )
-                ],
-              ),
-            ),
-            const SignUpForm(),
-          ]),
-        ),
+          const SignUpForm(),
+        ]),
       ),
     );
   }
