@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tnbeautiesapp/passwordfields.dart';
+import 'package:tnbeautiesapp/password_field.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({Key? key}) : super(key: key);
