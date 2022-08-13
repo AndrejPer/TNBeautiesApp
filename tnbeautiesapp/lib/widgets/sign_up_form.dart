@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tnbeautiesapp/password_field.dart';
+import 'package:tnbeautiesapp/widgets/email_field.dart';
+import 'package:tnbeautiesapp/widgets/password_field.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({Key? key}) : super(key: key);
@@ -41,6 +42,7 @@ class _SignUpFormState extends State<SignUpForm> {
               return null;
             },
           ),
+          const EmailField(),
           TextField(
             readOnly: true,
             controller: _dateController,

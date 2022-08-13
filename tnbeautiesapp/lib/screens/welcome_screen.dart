@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tnbeautiesapp/sign_up_form.dart';
+import 'package:tnbeautiesapp/widgets/sign_up_form.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
