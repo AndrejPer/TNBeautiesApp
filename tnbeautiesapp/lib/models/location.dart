@@ -8,6 +8,8 @@ class Location {
 
   Location(this._id, this._name, this._longitude, this._latitude,
       this._description, this._type);
+
+  double getLong() => _longitude;
 }
 
 enum LocationType {
