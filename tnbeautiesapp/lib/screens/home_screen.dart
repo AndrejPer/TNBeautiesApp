@@ -1,7 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:geocoder2/geocoder2.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:tnbeautiesapp/widgets/google_maps_widget.dart';
 import '../mocks/mock_location.dart';
 
 import '../models/location.dart';
@@ -15,29 +17,12 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text('Home'),
+      ),
       body: Stack(
-        children: [
-          FlutterMap(
-            options: MapOptions(
-              center: LatLng(46.061375, 14.506621),
-              zoom: 10.0,
-            ),
-            layers: [
-              TileLayerOptions(
-                  urlTemplate:
-                      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                  subdomains: ['a', 'b', 'c']),
-              MarkerLayerOptions(markers: [
-                Marker(
-                    point: LatLng(46.061375, 14.506621),
-                    builder: (context) => const Icon(
-                          Icons.location_on,
-                          color: Colors.red,
-                        )),
-              ])
-            ],
-          ),
+        children: const [
+          GoogleMapsWidget(),
         ],
       ),
       bottomNavigationBar: const NavBar(),
