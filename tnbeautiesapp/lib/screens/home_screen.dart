@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geocoder2/geocoder2.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:tnbeautiesapp/screens/mocks/mock_location.dart';
+import '../mocks/mock_location.dart';
 
 import '../models/location.dart';
 import '../widgets/nav_bar.dart';
