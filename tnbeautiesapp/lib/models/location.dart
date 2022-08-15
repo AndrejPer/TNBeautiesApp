@@ -1,16 +1,27 @@
+import 'package:flutter/foundation.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 class Location {
-  int _id;
-  String _name;
-  double _longitude;
-  double _latitude;
-  String _description;
-  LocationType _type;
+  final int id;
+  String name;
+  double longitude;
+  double latitude;
+  String description;
+  LocationType type;
 
-  Location(this._id, this._name, this._longitude, this._latitude,
-      this._description, this._type);
+  Location(
+      {required this.id,
+      required this.name,
+      required this.longitude,
+      required this.latitude,
+      required this.description,
+      required this.type});
 
-  double getLong() => _longitude;
+  double getLong() => longitude;
+  LatLng get latlng => LatLng(latitude, longitude);
 }
+
+//Factory Location.fromJson(Map<String, dynamic> json) => null;
 
 enum LocationType {
   city,
