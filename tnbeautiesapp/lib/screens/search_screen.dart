@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import '../mocks/mock_location.dart';
 import '../models/location.dart';
-import '../widgets/searc_widget.dart';
+import '../widgets/search_widget.dart';
+import 'location_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -44,17 +43,14 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget buildLocation(Location location) => ListTile(
         leading: const Icon(Icons.location_city),
         title: Text(location.name),
-        subtitle: Text(location.description),
         onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Center(
-                    child: Text(location.name),
-                  )),
-        ),
+            context,
+            MaterialPageRoute(
+              builder: (context) => LocationScreen(location: location),
+            )),
       );
 
-  buildSearch() => SearchWidget(
+  Widget buildSearch() => SearchWidget(
         text: query,
         hintText: 'Search location',
         onChanged: searchLocation,
