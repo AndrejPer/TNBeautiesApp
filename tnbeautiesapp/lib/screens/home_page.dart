@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tnbeautiesapp/screens/post_screen.dart';
-import 'package:tnbeautiesapp/screens/search_screen.dart';
-import 'package:tnbeautiesapp/widgets/google_maps_widget.dart';
+import './post_screen.dart';
+import './search_screen.dart';
+import '../widgets/google_maps_widget.dart';
 import '../mocks/mock_location.dart';
 
 import '../models/location.dart';
@@ -21,8 +21,8 @@ class _HomePageState extends State<HomePage> {
   final screens = const [
     GoogleMapsWidget(),
     SearchScreen(),
-    Center(child: Text('Profile')),
-    PostScreen()
+    PostScreen(),
+    Center(child: Text('Profile'))
   ];
 
   @override
@@ -49,13 +49,13 @@ class _HomePageState extends State<HomePage> {
                 selectedIcon: Icon(Icons.content_paste_search_outlined),
                 label: 'Search'),
             NavigationDestination(
-                icon: Icon(Icons.account_box_outlined),
-                selectedIcon: Icon(Icons.account_box),
-                label: 'Profile'),
-            NavigationDestination(
                 icon: Icon(Icons.feed_outlined),
                 selectedIcon: Icon(Icons.feed),
                 label: 'Post'),
+            NavigationDestination(
+                icon: Icon(Icons.account_box_outlined),
+                selectedIcon: Icon(Icons.account_box),
+                label: 'Profile'),
           ],
         ),
       ),
