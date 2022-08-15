@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tnbeautiesapp/screens/post_screen.dart';
 import 'package:tnbeautiesapp/screens/search_screen.dart';
 import 'package:tnbeautiesapp/widgets/google_maps_widget.dart';
 import '../mocks/mock_location.dart';
@@ -21,7 +22,7 @@ class _HomePageState extends State<HomePage> {
     GoogleMapsWidget(),
     SearchScreen(),
     Center(child: Text('Profile')),
-    Center(child: Text('Settings'))
+    PostScreen()
   ];
 
   @override
@@ -52,9 +53,9 @@ class _HomePageState extends State<HomePage> {
                 selectedIcon: Icon(Icons.account_box),
                 label: 'Profile'),
             NavigationDestination(
-                icon: Icon(Icons.settings_outlined),
-                selectedIcon: Icon(Icons.settings),
-                label: 'Settings'),
+                icon: Icon(Icons.feed_outlined),
+                selectedIcon: Icon(Icons.feed),
+                label: 'Post'),
           ],
         ),
       ),

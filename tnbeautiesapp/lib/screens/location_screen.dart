@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:tnbeautiesapp/models/photo.dart';
+import 'package:tnbeautiesapp/widgets/google_maps_display_location.dart';
 
 import '../models/location.dart';
 
@@ -15,22 +13,31 @@ class LocationScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(location.name),
       ),
-      body: Column(children: [
-        DecsriptionText(location: location),
-        ElevatedButton(
-          onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (BuildContext context) => const Center(
-                      child: Text('Map with pin'),
-                    )),
+      body: SingleChildScrollView(
+        child:
+            Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          DecsriptionText(location: location),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => Scaffold(
+                          appBar: AppBar(title: Text(location.name)),
+                          body: GoogleMapsDisplayLocation(
+                            displayLocation: location,
+                          ),
+                        )),
+              ),
+              style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0))),
+              child: const Icon(Icons.map),
+            ),
           ),
-          child: const Icon(Icons.map),
-          style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0))),
-        ),
-      ]),
+        ]),
+      ),
     );
   }
 }

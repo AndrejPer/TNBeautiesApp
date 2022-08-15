@@ -4,8 +4,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class Location {
   final int id;
   String name;
-  double longitude;
   double latitude;
+  double longitude;
   String description;
   LocationType type;
 
