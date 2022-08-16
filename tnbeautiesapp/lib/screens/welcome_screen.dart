@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tnbeautiesapp/widgets/sign_up_form.dart';
 
+import '../widgets/login_form.dart';
+
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
 
@@ -23,23 +25,7 @@ class WelcomeScreen extends StatelessWidget {
           ),
         ),
         body: TabBarView(children: [
-          Form(
-            key: null,
-            child: Column(
-              children: <Widget>[
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Enter username',
-                  ),
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Enter password',
-                  ),
-                )
-              ],
-            ),
-          ),
+          LoginForm(),
           const SignUpForm(),
         ]),
       ),

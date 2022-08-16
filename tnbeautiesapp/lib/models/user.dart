@@ -1,14 +1,32 @@
-class User {
-  int _id;
-  String _firstName;
-  String _lastName;
-  String _email;
-  DateTime _birthday;
-  RoleType _role;
-  int _locationID;
+import 'package:flutter/foundation.dart';
 
-  User(this._id, this._firstName, this._lastName, this._email, this._birthday,
-      this._role, this._locationID);
+class User {
+  final int id;
+  String firstName;
+  String lastName;
+  String email;
+  DateTime birthday;
+  RoleType role;
+  int? locationID;
+
+  User(
+      {required this.id,
+      required this.firstName,
+      required this.lastName,
+      required this.email,
+      required this.birthday,
+      required this.role,
+      required this.locationID});
+
+  factory User.fromJson(Map<String, dynamic> json) => User(
+      id: int.parse(json['id']),
+      firstName: json['first_name'],
+      lastName: json['last_name'],
+      email: json['email'],
+      birthday: DateTime.parse(json['birthday']),
+      role: RoleType.values.firstWhere((e) => describeEnum(e) == json['role']),
+      locationID:
+          json['location_id'] == null ? null : int.parse(json['location_id']));
 }
 
 enum RoleType { registeredUser, administrator }

@@ -29,7 +29,7 @@ class _PasswordFieldState extends State<PasswordField> {
         RegExp regExp = RegExp(
             r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$');
         if (value == null || value.isEmpty) {
-          return 'Please enter password';
+          return 'Please enter a password';
         } else if (!regExp.hasMatch(value)) {
           return 'Enter a valid password (Capital letter, number, symbole)';
         }

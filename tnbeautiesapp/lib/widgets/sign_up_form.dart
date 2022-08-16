@@ -17,59 +17,62 @@ class _SignUpFormState extends State<SignUpForm> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          TextFormField(
-            decoration: const InputDecoration(
-              hintText: 'First name',
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            TextFormField(
+              decoration: const InputDecoration(
+                hintText: 'First name',
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your last name';
+                }
+                return null;
+              },
             ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter your last name';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            decoration: const InputDecoration(
-              hintText: 'Last name',
+            TextFormField(
+              decoration: const InputDecoration(
+                hintText: 'Last name',
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your last name';
+                }
+                return null;
+              },
             ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter your last name';
-              }
-              return null;
-            },
-          ),
-          const EmailField(),
-          TextField(
-            readOnly: true,
-            controller: _dateController,
-            decoration: const InputDecoration(
-              hintText: 'Date of birth',
+            const EmailField(),
+            TextField(
+              readOnly: true,
+              controller: _dateController,
+              decoration: const InputDecoration(
+                hintText: 'Date of birth',
+              ),
+              onTap: () async {
+                var date = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(1900),
+                  lastDate: DateTime.now(),
+                );
+                _dateController.text = date.toString().substring(0, 10);
+              },
             ),
-            onTap: () async {
-              var date = await showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(1900),
-                lastDate: DateTime.now(),
-              );
-              _dateController.text = date.toString().substring(0, 10);
-            },
-          ),
-          const PasswordField(),
-          ElevatedButton(
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(const SnackBar(content: Text('Processing')));
-              }
-            },
-            child: const Text('Confirm'),
-          )
-        ],
+            const PasswordField(),
+            ElevatedButton(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Processing')));
+                }
+              },
+              child: const Text('Confirm'),
+            )
+          ],
+        ),
       ),
     );
   }
