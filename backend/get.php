@@ -1,7 +1,10 @@
-<?
+<?php
 require_once('db_conn.php');
 
-$query = 'SELECT * FROM User';
+$password = 'P4ssword?';
+$email = 'andrej@email.com';
+
+$query = "SELECT * FROM User WHERE email='$email' AND password = '$password'";
 $stm = $conn->prepare($query);
 $stm->execute();
 

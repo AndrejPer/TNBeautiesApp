@@ -13,7 +13,6 @@ $urlroot = 'https://www.studenti.famnit.upr.si/andrejp';
 try{
     $conn = new mysqli($servername, $username, $password, $db_name);
     #echo 'connected';
-    #echo $_SESSION;
 } catch(Exception $ex) {
     echo 'problem ';
     echo $ex->getMessage();
