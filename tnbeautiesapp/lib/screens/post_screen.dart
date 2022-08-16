@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PostScreen extends StatefulWidget {
   const PostScreen({Key? key}) : super(key: key);
@@ -35,21 +39,22 @@ class _PostScreenState extends State<PostScreen> {
               controller: _controller,
               keyboardType: TextInputType.multiline,
               maxLines: null,
-              style: TextStyle(),
+              style: const TextStyle(),
               maxLength: 500,
-              decoration: InputDecoration.collapsed(
+              decoration: const InputDecoration.collapsed(
                 hintText: 'What\'s on your mind?',
                 border: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.red, width: 5.0)),
               ),
             ),
           ),
-          Container(
+          SizedBox(
             height: 45.0,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ElevatedButton(onPressed: null, child: Text('Add Photos')),
+                const ElevatedButton(
+                    onPressed: null, child: Text('Add Photos')),
                 ElevatedButton(
                     onPressed: () => showDialog(
                         context: context,
@@ -59,7 +64,8 @@ class _PostScreenState extends State<PostScreen> {
                                 Text('Are you sure you want to post this?'),
                             actions: [
                               ElevatedButton(
-                                  onPressed: null, child: Text('Yes'))
+                                  onPressed: () => publishPost(),
+                                  child: Text('Yes')),
                             ],
                           );
                         }),
@@ -70,5 +76,33 @@ class _PostScreenState extends State<PostScreen> {
         ],
       ),
     );
+  }
+
+  Future publishPost() async {
+    var url = Uri(
+      scheme: 'https',
+      host: 'student.famnit.upr.si',
+      path: '/~89201045/publishPost.php',
+      port: 22,
+    );
+
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? user = preferences.getString('userJson');
+
+    String authorId = user == null ? '0' : jsonDecode(user)['id'];
+
+    var data = {
+      'publish_time': DateTime.now().toString(),
+      'content': _controller.text,
+      'author_id': authorId
+    };
+
+    http.Response response = await http.post(url, body: data);
+
+    if (response.body == "Success") {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Post published successfully!'),
+      ));
+    }
   }
 }
