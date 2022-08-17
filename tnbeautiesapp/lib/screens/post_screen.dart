@@ -1,8 +1,5 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -81,7 +78,7 @@ class _PostScreenState extends State<PostScreen> {
   Future publishPost() async {
     print('gonna try publish a post');
     var url = Uri(
-      scheme: 'https',
+      scheme: 'https§',
       host: 'student.famnit.upr.si',
       path: '/~89201045/postPost.php',
       port: 22,

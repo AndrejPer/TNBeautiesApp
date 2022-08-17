@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -16,6 +17,7 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool _logged = false;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +55,7 @@ class _LoginFormState extends State<LoginForm> {
                   }
                 },
               ),
-              ElevatedButton(onPressed: null, child: const Text('Log in'))
+              ElevatedButton(onPressed: userLogin, child: const Text('Log in'))
             ],
           ),
         ),
@@ -62,15 +64,15 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Future<bool> userLogin() async {
-    String email = _emailController.text;
-    String password = _passwordController.text;
-
-    var data = {'email': "andre@email.com", 'password': "P4ssword?"};
+    var data = {
+      'email': _emailController.text,
+      'password': _passwordController.text
+    };
     print('gonna try');
     var url = Uri(
       scheme: 'https',
       host: 'student.famnit.upr.si',
-      path: '/~89201045/get.php',
+      path: '/~89201045/login.php',
     );
 
     var response = await http.post(url, body: data);
@@ -81,9 +83,19 @@ class _LoginFormState extends State<LoginForm> {
     if (result != "Error") {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       await preferences.setString("userJson", response.body);
-      print(preferences.get('userJson'));
+      //print('stored: ${preferences.get('userJson')}');
+
+      print('gonna redirect');
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: ((context) => const HomePage())));
+
+      //Get.to(const HomePage());
+
       return true;
     } else {
+      print('wrong');
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Incorrest credentials!')));
       return false;
     }
   }
