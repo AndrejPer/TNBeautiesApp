@@ -9,10 +9,10 @@ $email = trim($_POST['email']);
 $birthday = trim($_POST['birthday']);
 $password = trim($_POST['password']);
 
-#$fname = 'Marko';
-#$lname = 'Markovic';
-#$email = 'marko@email.com';
-#$birthday = '2022-08-16 00:00:00';
+#$fname = 'Marija';
+#$lname = 'Marijic';
+#$email = 'marija@email.com';
+#$birthday = '2022-08-03 00:00:00';
 #$password = 'P4ssword?';
 
 $sql = "SELECT * FROM User WHERE email = '$email' AND password = '$password'";

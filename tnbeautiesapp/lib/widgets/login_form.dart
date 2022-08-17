@@ -89,8 +89,6 @@ class _LoginFormState extends State<LoginForm> {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: ((context) => const HomePage())));
 
-      //Get.to(const HomePage());
-
       return true;
     } else {
       print('wrong');
@@ -108,20 +106,12 @@ class _LoginFormState extends State<LoginForm> {
       port: 22,
     );
     // 'https://student.famnit.upr.si/~89201045/get.php';
-    print('gonna check $url');
+    //print('gonna check $url');
 
     http.Response response = await http.get(url);
-    print('response code is ${response.statusCode}');
+    //print('response code is ${response.statusCode}');
 
     var user = User.fromJson(jsonDecode(response.body));
-    print(user);
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getData();
-    //Future<bool> flag = userLogin();
+    //print(user);
   }
 }

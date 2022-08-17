@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../screens/home_page.dart';
+
 class SignUpForm extends StatefulWidget {
   const SignUpForm({Key? key}) : super(key: key);
 
@@ -114,9 +116,8 @@ class _SignUpFormState extends State<SignUpForm> {
                   if (_formKey.currentState!.validate()) {
                     ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Processing')));
-                  } else {
-                    registerUser();
                   }
+                  registerUser();
                 },
                 child: const Text('Confirm'),
               )
@@ -131,8 +132,7 @@ class _SignUpFormState extends State<SignUpForm> {
     var url = Uri(
       scheme: 'https',
       host: 'student.famnit.upr.si',
-      path: '/~89201045/register.php',
-      port: 22,
+      path: '/~89201045/signup.php',
     );
 
     var data = {
@@ -140,19 +140,21 @@ class _SignUpFormState extends State<SignUpForm> {
       'last_name': lnameCntroller.text,
       'email': emailCntroller.text,
       'birthday': dateController.text,
-      'password': passwordCntroller,
+      'password': passwordCntroller.text,
     };
 
     http.Response response = await http.post(url, body: data);
 
-    if (jsonDecode(response.body) == "Error") {
-      const AlertDialog(
-        title: Text('Oups'),
-      );
+    if (jsonDecode(response.body) == "Error - already registered") {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Already registered'),
+      ));
     } else {
-      const AlertDialog(
-        title: Text('Registered'),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Sucessfully registered'),
+      ));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: ((context) => const HomePage())));
     }
   }
 }
