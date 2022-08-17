@@ -1,20 +1,139 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:http/http.dart' as http;
 import '../models/comment.dart';
+import '../models/post.dart';
 import '../widgets/comment_widget.dart';
+import './post_screen.dart' as postScreen;
 
-class ViewCommentsScreen extends StatelessWidget {
-  final List<Comment> comments;
-  const ViewCommentsScreen({Key? key, required this.comments})
+class ViewCommentsScreen extends StatefulWidget {
+  final Post post;
+  final String name;
+  ViewCommentsScreen({Key? key, required this.post, required this.name})
       : super(key: key);
+
+  @override
+  State<ViewCommentsScreen> createState() => _ViewCommentsScreenState();
+}
+
+class _ViewCommentsScreenState extends State<ViewCommentsScreen> {
+  late List<Comment> comments;
+  bool _loaded = false;
+  TextEditingController controller = TextEditingController();
+
+  @override
+  void initState() {
+    Future.delayed(Duration.zero, () async {
+      await getComments();
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-      child: ListView.builder(
-          itemBuilder: (context, index) =>
-              CommentWidget(comment: comments[index])),
-    ));
+      appBar: AppBar(),
+      body: Column(
+        children: [
+          buildPost(widget.post),
+          _loaded
+              ? Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: ListView.builder(
+                        itemCount: comments.length,
+                        itemBuilder: (context, index) =>
+                            CommentWidget(comment: comments[index])),
+                  ),
+                )
+              : Center(child: CircularProgressIndicator()),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: displayCommentInputDialog,
+        child: Icon(Icons.fax),
+      ),
+    );
+  }
+
+  Widget buildPost(Post post) =>
+      ListTile(title: Text(post.content), subtitle: Text(widget.name));
+
+  Future getComments() async {
+    List<Comment> list = [];
+    var url = Uri(
+      scheme: 'https',
+      host: 'student.famnit.upr.si',
+      path: '/~89201045/getCommentOnPost.php',
+    );
+
+    var data = {'post_id': widget.post.id.toString()};
+
+    http.Response response = await http.post(url, body: data);
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      //since we will just get a collection of jsons
+      final resultArray = jsonDecode(response.body);
+
+      //print('${resultArray[0]} and ${resultArray[1]}');
+      for (var i in resultArray) {
+        list.add(Comment.fromJson(i));
+      }
+    }
+
+    setState(() {
+      comments = list;
+      _loaded = true;
+    });
+  }
+
+  Future<void> displayCommentInputDialog() {
+    return showDialog(
+        context: context,
+        builder: ((context) => AlertDialog(
+              title: Text('Add comment'),
+              content: TextField(
+                controller: controller,
+              ),
+              actions: [
+                ElevatedButton(onPressed: postComment, child: Text('Add'))
+              ],
+            )));
+  }
+
+  Future<void> postComment() async {
+    print('gonna try publish a comment');
+    var url = Uri(
+      scheme: 'https§',
+      host: 'student.famnit.upr.si',
+      path: '/~89201045/postCommentOnPost.php',
+      port: 22,
+    );
+
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? user = preferences.getString('userJson');
+
+    String authorId = user == null ? '0' : jsonDecode(user)['id'];
+    //print('autor is $authorId');
+
+    var data = {
+      'publish_time': DateTime.now().toString(),
+      'content': controller.text,
+      'author_id': authorId
+    };
+
+    http.Response response = await http.post(url, body: data);
+
+    if (response.statusCode == 200) {
+      print('success');
+    }
+
+    setState(() {
+      Navigator.pop(context);
+    });
   }
 }

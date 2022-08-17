@@ -13,20 +13,19 @@ class CommentWidget extends StatelessWidget {
     getUser();
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          FutureBuilder(
-              future: getUser(),
-              builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-                if (snapshot.hasData) {
-                  String? userName = snapshot.data;
-                  return Text(userName!);
-                } else {
-                  return Text("Unknown");
-                }
-              }),
-          Text(comment.content),
-        ],
+      child: ListTile(
+        textColor: Colors.blue,
+        title: Text(comment.content),
+        subtitle: FutureBuilder(
+            future: getUser(),
+            builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+              if (snapshot.hasData) {
+                String? userName = snapshot.data;
+                return Text(userName!);
+              } else {
+                return Text("Unknown");
+              }
+            }),
       ),
     );
   }
@@ -43,6 +42,7 @@ class CommentWidget extends StatelessWidget {
         await http.get(url, headers: {'id': comment.userID.toString()});
 
     if (response.statusCode == 200) {
+      print('getting name');
       var result = jsonDecode(response.body);
       return "${result['first_name']} ${result['last_name']}";
     } else {

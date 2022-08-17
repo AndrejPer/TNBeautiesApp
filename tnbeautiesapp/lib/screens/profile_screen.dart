@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:tnbeautiesapp/screens/view_comments_screen.dart';
 import '../models/post.dart';
 
 import '../models/user.dart';
@@ -22,6 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late List<Post> posts;
   late String userName;
   bool _loaded = false;
+
   @override
   void initState() {
     Future.delayed(Duration.zero, () async {
@@ -55,17 +57,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
       floatingActionButton: const Padding(
         padding: EdgeInsets.all(10.0),
         child:
-            FloatingActionButton(onPressed: () => , child: Icon(Icons.settings)),
+            FloatingActionButton(onPressed: null, child: Icon(Icons.settings)),
       ),
     );
   }
 
   Widget buildPost(Post post) => ListTile(
-        title: Text(userName),
-        subtitle: Text(post.content),
+        title: Text(post.content),
+        subtitle: Text(userName),
         trailing: ElevatedButton(
-          onPressed: null,
-          child: Text('Comment'),
+          onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ViewCommentsScreen(
+                        post: post,
+                        name: userName,
+                      ))),
+          child: Text('Comments'),
         ),
       );
 

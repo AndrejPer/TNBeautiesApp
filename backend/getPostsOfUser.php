@@ -10,8 +10,7 @@ $result = mysqli_query($conn, $query);
 $count = mysqli_num_rows($result);
 #echo $count;
 
-$rows = [];
-if($count != 0) {
+if($result) {
     $res = mysqli_fetch_all($conn->query($query), MYSQLI_ASSOC);
     echo json_Encode($res);
 }
