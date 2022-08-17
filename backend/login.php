@@ -8,9 +8,9 @@ include 'db_conn.php';
 $email = trim($_POST['email']);
 $password = trim($_POST['password']);
 
-$sql = "SELECT * FROM User WHERE email = '$email' AND password = '$password'";
+$query = "SELECT * FROM User WHERE email = '$email' AND password = '$password'";
 
-$result = mysqli_query($conn, $sql);
+$result = mysqli_query($conn, $query);
 $count = mysqli_num_rows($result);
 
 if($count != 1) {

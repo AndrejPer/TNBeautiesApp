@@ -60,16 +60,16 @@ class _PostScreenState extends State<PostScreen> {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            content:
-                                Text('Are you sure you want to post this?'),
+                            content: const Text(
+                                'Are you sure you want to post this?'),
                             actions: [
                               ElevatedButton(
                                   onPressed: () => publishPost(),
-                                  child: Text('Yes')),
+                                  child: const Text('Yes')),
                             ],
                           );
                         }),
-                    child: Text('Publish'))
+                    child: const Text('Publish'))
               ],
             ),
           )
@@ -79,10 +79,11 @@ class _PostScreenState extends State<PostScreen> {
   }
 
   Future publishPost() async {
+    print('gonna try publish a post');
     var url = Uri(
       scheme: 'https',
       host: 'student.famnit.upr.si',
-      path: '/~89201045/publishPost.php',
+      path: '/~89201045/postPost.php',
       port: 22,
     );
 
@@ -90,6 +91,7 @@ class _PostScreenState extends State<PostScreen> {
     String? user = preferences.getString('userJson');
 
     String authorId = user == null ? '0' : jsonDecode(user)['id'];
+    print('autor is $authorId');
 
     var data = {
       'publish_time': DateTime.now().toString(),
@@ -98,6 +100,7 @@ class _PostScreenState extends State<PostScreen> {
     };
 
     http.Response response = await http.post(url, body: data);
+    print(response.statusCode);
 
     if (response.body == "Success") {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

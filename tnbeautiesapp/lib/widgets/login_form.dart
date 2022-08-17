@@ -81,6 +81,7 @@ class _LoginFormState extends State<LoginForm> {
     if (result != "Error") {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       await preferences.setString("userJson", response.body);
+      print(preferences.get('userJson'));
       return true;
     } else {
       return false;
