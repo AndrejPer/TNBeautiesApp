@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tnbeautiesapp/screens/profile_screen.dart';
 import './post_screen.dart';
 import './search_screen.dart';
 import '../widgets/google_maps_widget.dart';
@@ -22,7 +23,7 @@ class _HomePageState extends State<HomePage> {
     GoogleMapsWidget(),
     SearchScreen(),
     PostScreen(),
-    Center(child: Text('Profile'))
+    ProfileScreen()
   ];
 
   @override

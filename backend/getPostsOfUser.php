@@ -10,13 +10,15 @@ $result = mysqli_query($conn, $query);
 $count = mysqli_num_rows($result);
 #echo $count;
 
+$rows = [];
 if($count != 0) {
-    while($obj = mysqli_fetch_assoc($result)) {
-        echo json_encode($obj);
-    }
+    $res = mysqli_fetch_all($conn->query($query), MYSQLI_ASSOC);
+    echo json_Encode($res);
 }
 else {
     echo mysqli_error($conn);
 }
+
+$result->free();
 
 ?>

@@ -88,7 +88,7 @@ class _PostScreenState extends State<PostScreen> {
     String? user = preferences.getString('userJson');
 
     String authorId = user == null ? '0' : jsonDecode(user)['id'];
-    print('autor is $authorId');
+    //print('autor is $authorId');
 
     var data = {
       'publish_time': DateTime.now().toString(),
@@ -97,7 +97,7 @@ class _PostScreenState extends State<PostScreen> {
     };
 
     http.Response response = await http.post(url, body: data);
-    print(response.statusCode);
+    //print(response.statusCode);
 
     if (response.body == "Success") {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

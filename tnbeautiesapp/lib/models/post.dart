@@ -1,8 +1,18 @@
 class Post {
-  int _id;
-  DateTime _publishTime;
-  String _content;
-  int _authorID;
+  int id;
+  DateTime publishTime;
+  String content;
+  int authorID;
 
-  Post(this._id, this._publishTime, this._content, this._authorID);
+  Post(
+      {required this.id,
+      required this.publishTime,
+      required this.content,
+      required this.authorID});
+
+  factory Post.fromJson(Map<String, dynamic> json) => Post(
+      id: int.parse(json['id']),
+      publishTime: DateTime.parse(json['publish_time']),
+      content: json['content'],
+      authorID: int.parse(json['author_id']));
 }
