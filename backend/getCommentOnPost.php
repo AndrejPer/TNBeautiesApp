@@ -2,8 +2,8 @@
 
 include 'db_conn.php';
 
-#$userID = $_POST['id'];
-$postID = '9';
+$postID = $_POST['post_id'];
+
 $query = "SELECT * FROM Comment WHERE post_id='$postID'";
 
 $result = mysqli_query($conn, $query);

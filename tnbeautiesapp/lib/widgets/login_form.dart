@@ -18,6 +18,7 @@ class _LoginFormState extends State<LoginForm> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _logged = false;
+  bool _isObscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +47,17 @@ class _LoginFormState extends State<LoginForm> {
               TextFormField(
                 controller: _passwordController,
                 obscureText: true,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'Enter password',
+                  // this button is used to toggle the password visibility
+                  suffixIcon: IconButton(
+                      icon: Icon(
+                          _isObscure ? Icons.visibility : Icons.visibility_off),
+                      onPressed: () {
+                        setState(() {
+                          _isObscure = !_isObscure;
+                        });
+                      }),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {

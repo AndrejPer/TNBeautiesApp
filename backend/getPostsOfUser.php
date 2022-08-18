@@ -2,9 +2,8 @@
 
 include 'db_conn.php';
 
-#$userID = $_POST['id'];
-$userID = '1';
-$query = "SELECT * FROM Post WHERE author_id='$userID'";
+$authorID = $_POST['author_id'];
+$query = "SELECT * FROM Post WHERE author_id='$authorID'";
 
 $result = mysqli_query($conn, $query);
 $count = mysqli_num_rows($result);

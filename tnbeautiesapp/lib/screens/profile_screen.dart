@@ -32,8 +32,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
       SharedPreferences pref = await SharedPreferences.getInstance();
       final String? user = pref.getString('userJson');
+      print('gonna try get the name');
       userName = user == null
-          ? 'Andrej Perkovic'
+          ? 'Unknown'
           : jsonDecode(user)['first_name'] +
               " " +
               jsonDecode(user)['last_name'];
@@ -58,6 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         floatingActionButton: Padding(
           padding: const EdgeInsets.all(10.0),
           child: FloatingActionButton(
+            child: const Icon(Icons.logout),
             onPressed: () async {
               SharedPreferences pref = await SharedPreferences.getInstance();
               await pref.clear();
@@ -97,6 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var id = jsonDecode(preferences.getString('userJson')!)['id'];
+    print('gonna try with id $id');
 
     //TODO: correct id to actual
     var data = {'author_id': id.toString()};
@@ -107,7 +110,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (response.statusCode == 200) {
       //since we will just get a collection of jsons
       final List<dynamic> resultArray = jsonDecode(response.body);
-      //print('${resultArray[0]} and ${resultArray[1]}');
       for (var i in resultArray) {
         list.add(Post.fromJson(i));
       }

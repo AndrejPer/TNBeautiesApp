@@ -2,8 +2,8 @@
 
 include 'db_conn.php';
 
-#$userID = $_POST['id'];
-$userID = '1';
+$userID = $_POST['id'];
+
 $query = "SELECT first_name, last_name FROM User WHERE id='$userID'";
 
 $result = mysqli_query($conn, $query);

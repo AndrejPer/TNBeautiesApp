@@ -111,7 +111,6 @@ class _ViewCommentsScreenState extends State<ViewCommentsScreen> {
       scheme: 'https',
       host: 'student.famnit.upr.si',
       path: '/~89201045/postCommentOnPost.php',
-      port: 22,
     );
 
     SharedPreferences preferences = await SharedPreferences.getInstance();

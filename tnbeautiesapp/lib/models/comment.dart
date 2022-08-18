@@ -18,7 +18,7 @@ class Comment {
       id: int.parse(json['id']),
       publishTime: DateTime.parse(json['publish_time']),
       content: json['content'],
-      userID: int.parse(json['user_id']),
+      userID: int.parse(json['author_id']),
       reviewID: json['review_id'] == null ? null : int.parse(json['review_id']),
       postID: json['post_id'] == null ? null : int.parse(json['post_id']));
 }

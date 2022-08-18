@@ -15,8 +15,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final Location ljubljana = MockLocation.FetchAny();
-
   int index = 0;
 
   final screens = const [

@@ -50,8 +50,6 @@ class _PostScreenState extends State<PostScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const ElevatedButton(
-                    onPressed: null, child: Text('Add Photos')),
                 ElevatedButton(
                     onPressed: () => showDialog(
                         context: context,
@@ -81,7 +79,6 @@ class _PostScreenState extends State<PostScreen> {
       scheme: 'https',
       host: 'student.famnit.upr.si',
       path: '/~89201045/postPost.php',
-      port: 22,
     );
 
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -93,7 +90,7 @@ class _PostScreenState extends State<PostScreen> {
     var data = {
       'publish_time': DateTime.now().toString(),
       'content': _controller.text,
-      'author_id': authorId
+      'author_id': authorId,
     };
 
     http.Response response = await http.post(url, body: data);

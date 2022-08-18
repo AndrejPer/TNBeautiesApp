@@ -2,9 +2,6 @@
 
 include 'db_conn.php';
 
-#$password = 'P4ssword?';
-#$email = 'andrej@email.com';
-
 $email = trim($_POST['email']);
 $password = trim($_POST['password']);
 

@@ -34,12 +34,12 @@ class CommentWidget extends StatelessWidget {
     var url = Uri(
       scheme: 'https',
       host: 'student.famnit.upr.si',
-      path: '/~89201045/getUser.php',
-      port: 22,
+      path: '/~89201045/getUserName.php',
     );
 
     http.Response response =
         await http.get(url, headers: {'id': comment.userID.toString()});
+    print(response.statusCode);
 
     if (response.statusCode == 200) {
       print('getting name');

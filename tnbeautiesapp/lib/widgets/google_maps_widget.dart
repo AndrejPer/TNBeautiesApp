@@ -15,7 +15,7 @@ class GoogleMapsWidget extends StatefulWidget {
 class _GoogleMapsWidgetState extends State<GoogleMapsWidget> {
   late GoogleMapController _controller;
   static const CameraPosition _ljubljanaPosition =
-      CameraPosition(target: LatLng(46.061375, 14.506621), zoom: 12);
+      CameraPosition(target: LatLng(46.061375, 14.506621), zoom: 8);
   bool _loaded = false;
   List<Location> locations = [];
 
