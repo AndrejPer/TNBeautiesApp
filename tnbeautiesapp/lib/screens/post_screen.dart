@@ -74,7 +74,7 @@ class _PostScreenState extends State<PostScreen> {
   }
 
   Future publishPost() async {
-    print('gonna try publish a post');
+    //print('gonna try publish a post');
     var url = Uri(
       scheme: 'https',
       host: 'student.famnit.upr.si',
@@ -85,7 +85,7 @@ class _PostScreenState extends State<PostScreen> {
     String? user = preferences.getString('userJson');
 
     String authorId = user == null ? '1' : jsonDecode(user)['id'];
-    print('autor is $authorId');
+    //print('autor is $authorId');
 
     var data = {
       'publish_time': DateTime.now().toString(),
@@ -94,13 +94,14 @@ class _PostScreenState extends State<PostScreen> {
     };
 
     http.Response response = await http.post(url, body: data);
-    print(response.statusCode);
+    //print(response.body);
 
-    if (response.body == "Success") {
+    if (response.body.contains('Success')) {
       Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Post published successfully!'),
       ));
+      _controller.clear();
     }
   }
 }
