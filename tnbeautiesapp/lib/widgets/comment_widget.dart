@@ -23,7 +23,7 @@ class CommentWidget extends StatelessWidget {
                 String? userName = snapshot.data;
                 return Text(userName!);
               } else {
-                return Text("Unknown");
+                return const Text("Loading");
               }
             }),
       ),
@@ -38,8 +38,8 @@ class CommentWidget extends StatelessWidget {
     );
 
     http.Response response =
-        await http.get(url, headers: {'id': comment.userID.toString()});
-    print(response.statusCode);
+        await http.post(url, body: {'id': comment.userID.toString()});
+    print(response.body);
 
     if (response.statusCode == 200) {
       print('getting name');
