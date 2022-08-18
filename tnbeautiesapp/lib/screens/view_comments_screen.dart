@@ -108,7 +108,7 @@ class _ViewCommentsScreenState extends State<ViewCommentsScreen> {
   Future<void> postComment() async {
     print('gonna try publish a comment');
     var url = Uri(
-      scheme: 'https§',
+      scheme: 'https',
       host: 'student.famnit.upr.si',
       path: '/~89201045/postCommentOnPost.php',
       port: 22,
@@ -123,7 +123,8 @@ class _ViewCommentsScreenState extends State<ViewCommentsScreen> {
     var data = {
       'publish_time': DateTime.now().toString(),
       'content': controller.text,
-      'author_id': authorId
+      'author_id': authorId,
+      'post_id': widget.post.id.toString()
     };
 
     http.Response response = await http.post(url, body: data);

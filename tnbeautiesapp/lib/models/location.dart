@@ -19,9 +19,17 @@ class Location {
 
   double getLong() => longitude;
   LatLng get latlng => LatLng(latitude, longitude);
-}
 
-//Factory Location.fromJson(Map<String, dynamic> json) => null;
+  factory Location.fromJson(Map<String, dynamic> json) => Location(
+        id: int.parse(json['id']),
+        name: json['name'],
+        longitude: double.parse(json['longitude']),
+        latitude: double.parse(json['latitude']),
+        description: json['description'],
+        type: LocationType.values
+            .firstWhere((e) => describeEnum(e) == json['type']),
+      );
+}
 
 enum LocationType {
   city,

@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:tnbeautiesapp/screens/view_comments_screen.dart';
+import 'package:tnbeautiesapp/screens/welcome_screen.dart';
 import '../models/post.dart';
 
 import '../models/user.dart';
@@ -43,23 +44,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _loaded
-          ? Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ListView.builder(
-                  itemCount: posts.length,
-                  itemBuilder: (context, index) {
-                    final post = posts[index];
-                    return buildPost(post);
-                  }),
-            )
-          : const Center(child: CircularProgressIndicator()),
-      floatingActionButton: const Padding(
-        padding: EdgeInsets.all(10.0),
-        child:
-            FloatingActionButton(onPressed: null, child: Icon(Icons.settings)),
-      ),
-    );
+        body: _loaded
+            ? Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: ListView.builder(
+                    itemCount: posts.length,
+                    itemBuilder: (context, index) {
+                      final post = posts[index];
+                      return buildPost(post);
+                    }),
+              )
+            : const Center(child: CircularProgressIndicator()),
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: FloatingActionButton(
+            onPressed: () async {
+              SharedPreferences pref = await SharedPreferences.getInstance();
+              await pref.clear();
+
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => const WelcomeScreen()),
+              );
+            },
+          ),
+        ));
   }
 
   Widget buildPost(Post post) => ListTile(
@@ -86,10 +96,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
 
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    //var id = jsonDecode(preferences.getString('userJson')!)['id'];
+    var id = jsonDecode(preferences.getString('userJson')!)['id'];
 
     //TODO: correct id to actual
-    var data = {'author_id': '1'};
+    var data = {'author_id': id.toString()};
 
     http.Response response = await http.post(url, body: data);
     print(response.body);

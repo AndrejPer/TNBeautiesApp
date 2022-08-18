@@ -4,6 +4,9 @@ import '../mocks/mock_location.dart';
 import '../models/location.dart';
 import '../widgets/search_widget.dart';
 import 'location_screen.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import '../models/post.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -13,14 +16,8 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  late List<Location> locations;
+  List<Location> locations = [];
   String query = '';
-
-  @override
-  void initState() {
-    super.initState();
-    locations = allLocations;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,16 +53,29 @@ class _SearchScreenState extends State<SearchScreen> {
         onChanged: searchLocation,
       );
 
-  void searchLocation(String query) {
-    final suggestions = allLocations.where((location) {
-      final locationName = location.name.toLowerCase();
-      final input = query.toLowerCase();
+  void searchLocation(String query) async {
+    List<Location> list = [];
+    var url = Uri(
+      scheme: 'https',
+      host: 'student.famnit.upr.si',
+      path: '/~89201045/getLocationsByName.php',
+    );
 
-      return locationName.contains(input);
-    }).toList();
+    var data = {'name': query};
+
+    http.Response response = await http.post(url, body: data);
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> resultArray = jsonDecode(response.body);
+      for (var i in resultArray) {
+        list.add(Location.fromJson(i));
+      }
+    }
 
     setState(() {
-      locations = suggestions;
+      locations = list;
+      //_loaded = true;
     });
   }
 }
