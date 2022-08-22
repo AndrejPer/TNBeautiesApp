@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:tnbeautiesapp/mocks/mock_location.dart';
 import '../models/location.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -51,14 +50,12 @@ class _GoogleMapsWidgetState extends State<GoogleMapsWidget> {
   }
 
   Set<Marker> _buildMarkers(List<Location> location) {
-    print('building marker on ${location[0].name}');
     Set<Marker> markersToReturn = location
         .map((element) => Marker(
             markerId: MarkerId(element.id.toString()),
             position: LatLng(element.latitude, element.longitude),
             icon: BitmapDescriptor.defaultMarker))
         .toSet();
-    print(markersToReturn);
     return markersToReturn;
   }
 
@@ -71,7 +68,6 @@ class _GoogleMapsWidgetState extends State<GoogleMapsWidget> {
     );
 
     http.Response response = await http.get(url);
-    print(response.body);
 
     if (response.statusCode == 200) {
       final List<dynamic> resultArray = jsonDecode(response.body);

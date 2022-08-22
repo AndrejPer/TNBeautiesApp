@@ -24,9 +24,9 @@ class WelcomeScreen extends StatelessWidget {
             ],
           ),
         ),
-        body: TabBarView(children: [
+        body: const TabBarView(children: [
           LoginForm(),
-          const SignUpForm(),
+          SignUpForm(),
         ]),
       ),
     );

@@ -1,17 +1,11 @@
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/widgets.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:tnbeautiesapp/screens/view_comments_screen.dart';
 import 'package:tnbeautiesapp/screens/welcome_screen.dart';
 import '../models/post.dart';
-
-import '../models/user.dart';
-import '../screens/home_page.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -32,7 +26,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
       SharedPreferences pref = await SharedPreferences.getInstance();
       final String? user = pref.getString('userJson');
-      print('gonna try get the name');
       userName = user == null
           ? 'Unknown'
           : jsonDecode(user)['first_name'] +
@@ -85,7 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         post: post,
                         name: userName,
                       ))),
-          child: Text('Comments'),
+          child: const Text('Comments'),
         ),
       );
 
@@ -99,13 +92,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var id = jsonDecode(preferences.getString('userJson')!)['id'];
-    print('gonna try with id $id');
 
-    //TODO: correct id to actual
     var data = {'author_id': id.toString()};
 
     http.Response response = await http.post(url, body: data);
-    print(response.body);
 
     if (response.statusCode == 200) {
       //since we will just get a collection of jsons

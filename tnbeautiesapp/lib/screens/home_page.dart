@@ -3,9 +3,6 @@ import 'package:tnbeautiesapp/screens/profile_screen.dart';
 import './post_screen.dart';
 import './search_screen.dart';
 import '../widgets/google_maps_widget.dart';
-import '../mocks/mock_location.dart';
-
-import '../models/location.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

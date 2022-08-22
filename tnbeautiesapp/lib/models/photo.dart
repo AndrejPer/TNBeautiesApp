@@ -1,9 +1,9 @@
 class Photo {
-  int _id;
-  String _url;
-  CopyrightType _copyright;
+  int id;
+  String url;
+  CopyrightType copyright;
 
-  Photo(this._id, this._url, this._copyright);
+  Photo({required this.id, required this.url, required this.copyright});
 }
 
 enum CopyrightType { publicDomain, creativeCommons, fairUse }

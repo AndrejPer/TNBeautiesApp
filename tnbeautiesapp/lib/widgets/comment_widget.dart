@@ -39,10 +39,8 @@ class CommentWidget extends StatelessWidget {
 
     http.Response response =
         await http.post(url, body: {'id': comment.userID.toString()});
-    print(response.body);
 
     if (response.statusCode == 200) {
-      print('getting name');
       var result = jsonDecode(response.body);
       return "${result['first_name']} ${result['last_name']}";
     } else {

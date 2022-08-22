@@ -1,10 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-
-import '../models/user.dart';
 import '../screens/home_page.dart';
 
 class LoginForm extends StatefulWidget {
@@ -15,6 +12,7 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _logged = false;
@@ -24,6 +22,7 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Form(
+        key: _formKey,
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(
@@ -46,7 +45,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
               TextFormField(
                 controller: _passwordController,
-                obscureText: true,
+                obscureText: _isObscure,
                 decoration: InputDecoration(
                   hintText: 'Enter password',
                   // this button is used to toggle the password visibility
@@ -62,7 +61,8 @@ class _LoginFormState extends State<LoginForm> {
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a password';
-                  }
+                  } else
+                    return '';
                 },
               ),
               ElevatedButton(onPressed: userLogin, child: const Text('Log in'))
@@ -78,7 +78,6 @@ class _LoginFormState extends State<LoginForm> {
       'email': _emailController.text,
       'password': _passwordController.text
     };
-    print('gonna try');
     var url = Uri(
       scheme: 'https',
       host: 'student.famnit.upr.si',
@@ -88,40 +87,20 @@ class _LoginFormState extends State<LoginForm> {
     var response = await http.post(url, body: data);
     var result = jsonDecode(response.body);
 
-    print('result is: $result');
-
     if (result != "Error") {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       await preferences.setString("userJson", response.body);
       //print('stored: ${preferences.get('userJson')}');
 
-      print('gonna redirect');
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: ((context) => const HomePage())));
 
       return true;
     } else {
-      print('wrong');
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Incorrest credentials!')));
+      //print('wrong');
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Incorrest credentials!')));
       return false;
     }
-  }
-
-  Future getData() async {
-    var url = Uri(
-      scheme: 'https',
-      host: 'student.famnit.upr.si',
-      path: '/~89201045/login.php',
-      port: 22,
-    );
-    // 'https://student.famnit.upr.si/~89201045/get.php';
-    //print('gonna check $url');
-
-    http.Response response = await http.get(url);
-    //print('response code is ${response.statusCode}');
-
-    var user = User.fromJson(jsonDecode(response.body));
-    //print(user);
   }
 }

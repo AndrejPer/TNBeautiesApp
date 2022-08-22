@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tnbeautiesapp/mocks/mock_location.dart';
-
-import '../models/location.dart';
 
 class SearchWidget extends StatefulWidget {
   final String text;
@@ -38,7 +35,6 @@ class _SearchWidgetState extends State<SearchWidget> {
                     controller.clear();
                     widget.onChanged('');
                     FocusScope.of(context).requestFocus(FocusNode());
-                    print('Pressed');
                   },
                 )
               : null,

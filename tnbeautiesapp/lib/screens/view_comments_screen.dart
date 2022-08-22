@@ -7,12 +7,11 @@ import 'package:http/http.dart' as http;
 import '../models/comment.dart';
 import '../models/post.dart';
 import '../widgets/comment_widget.dart';
-import './post_screen.dart' as postScreen;
 
 class ViewCommentsScreen extends StatefulWidget {
   final Post post;
   final String name;
-  ViewCommentsScreen({Key? key, required this.post, required this.name})
+  const ViewCommentsScreen({Key? key, required this.post, required this.name})
       : super(key: key);
 
   @override
@@ -49,12 +48,12 @@ class _ViewCommentsScreenState extends State<ViewCommentsScreen> {
                             CommentWidget(comment: comments[index])),
                   ),
                 )
-              : Center(child: CircularProgressIndicator()),
+              : const Center(child: CircularProgressIndicator()),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: displayCommentInputDialog,
-        child: Icon(Icons.fax),
+        child: const Icon(Icons.fax),
       ),
     );
   }
@@ -73,7 +72,6 @@ class _ViewCommentsScreenState extends State<ViewCommentsScreen> {
     var data = {'post_id': widget.post.id.toString()};
 
     http.Response response = await http.post(url, body: data);
-    print(response.body);
 
     if (response.statusCode == 200) {
       //since we will just get a collection of jsons
@@ -95,18 +93,17 @@ class _ViewCommentsScreenState extends State<ViewCommentsScreen> {
     return showDialog(
         context: context,
         builder: ((context) => AlertDialog(
-              title: Text('Add comment'),
+              title: const Text('Add comment'),
               content: TextField(
                 controller: controller,
               ),
               actions: [
-                ElevatedButton(onPressed: postComment, child: Text('Add'))
+                ElevatedButton(onPressed: postComment, child: const Text('Add'))
               ],
             )));
   }
 
   Future<void> postComment() async {
-    print('gonna try publish a comment');
     var url = Uri(
       scheme: 'https',
       host: 'student.famnit.upr.si',
@@ -129,7 +126,7 @@ class _ViewCommentsScreenState extends State<ViewCommentsScreen> {
     http.Response response = await http.post(url, body: data);
 
     if (response.statusCode == 200) {
-      print('success');
+      //print('success');
     }
 
     setState(() {

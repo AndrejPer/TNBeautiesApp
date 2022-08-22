@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-
-import '../mocks/mock_location.dart';
 import '../models/location.dart';
 import '../widgets/search_widget.dart';
 import 'location_screen.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../models/post.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -64,7 +61,6 @@ class _SearchScreenState extends State<SearchScreen> {
     var data = {'name': query};
 
     http.Response response = await http.post(url, body: data);
-    print(response.body);
 
     if (response.statusCode == 200) {
       final List<dynamic> resultArray = jsonDecode(response.body);
